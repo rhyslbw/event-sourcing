@@ -23,6 +23,7 @@ class Space.eventSourcing extends Space.Module
   requiredModules: ['Space.messaging']
 
   dependencies: {
+    meteor: 'Meteor'
     mongo: 'Mongo'
     mongoInternals: 'MongoInternals'
   }
@@ -44,7 +45,9 @@ class Space.eventSourcing extends Space.Module
     @commitPublisher = @injector.get('Space.eventSourcing.CommitPublisher')
 
   onStart: ->
-    @commitPublisher.startPublishing()
+    @meteor.setTimeout(=>
+      @commitPublisher.startPublishing()
+    , 2000)
 
   onReset: ->
     @injector.get('Space.eventSourcing.Commits')?.remove {}
